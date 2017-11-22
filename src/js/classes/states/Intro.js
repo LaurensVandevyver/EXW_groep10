@@ -5,6 +5,7 @@ export default class Menu extends Phaser.State {
     this.createBackground();
     this.createLogo();
     this.createInvite();
+    this.createWoman();
     //this.createButton();
   }
 
@@ -14,8 +15,11 @@ export default class Menu extends Phaser.State {
   }
 
   createLogo() {
-    this.logo = this.add.sprite(this.game.width / 2, this.game.height / 2, `logo`);
-    this.logo.anchor.setTo(.5, .5);
+    this.logo = this.add.sprite(10, 10, `smalllogo`);
+  }
+
+  createWoman() {
+    this.woman = this.add.sprite(this.game.width - 280, this.game.height - 530, `woman`);
   }
 
   createInvite() {
