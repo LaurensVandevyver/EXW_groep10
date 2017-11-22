@@ -1,9 +1,12 @@
-
+import Game from './classes/Game';
 
 const init = () => {
+  startGame();
+};
 
-  console.log(`Hello, game`)
 
+const startGame = () => {
+  new Game();
 };
 
 init();
