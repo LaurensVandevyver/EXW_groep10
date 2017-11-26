@@ -10,7 +10,7 @@ export default class Menu extends Phaser.State {
 
   createBackground() {
     this.brown = this.add.tileSprite(0, 0, this.game.width, this.game.height, `brown`);
-    this.background = this.add.sprite(0, 0, `background`);
+    this.background = this.add.tileSprite(0, 0, this.game.width, this.game.height, `background`);
   }
 
   createLogo() {

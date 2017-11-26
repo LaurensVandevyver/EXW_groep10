@@ -1,4 +1,5 @@
-import Button from '../objects/button';
+import Button from '../objects/Button';
+import Target from '../objects/Target';
 
 export default class Menu extends Phaser.State {
   create() {
@@ -6,12 +7,14 @@ export default class Menu extends Phaser.State {
     this.createLogo();
     this.createInvite();
     this.createWoman();
+    this.startGeneratingTargets();
     //this.createButton();
   }
 
   createBackground() {
     this.brown = this.add.tileSprite(0, 0, this.game.width, this.game.height, `brown`);
-    this.background = this.add.sprite(0, 0, `background`);
+    // this.background = this.add.sprite(0, 0, `background`);
+    this.background = this.add.tileSprite(0, 0, this.game.width, this.game.height, `background`);
   }
 
   createLogo() {
@@ -30,6 +33,17 @@ export default class Menu extends Phaser.State {
 
   buttonClicked() {
     this.state.start(`Intro`);
+  }
+
+
+  createTarget() {
+    const target = new Target(this.game, this.platforms);
+    target.reset(target.width, this.world.centerY);
+  }
+
+  startGeneratingTargets() {
+    this.targetGenerator = this.time.events.loop(Phaser.Timer.SECOND * 2, this.createTarget, this);
+    this.targetGenerator.timer.start();
   }
 
 }

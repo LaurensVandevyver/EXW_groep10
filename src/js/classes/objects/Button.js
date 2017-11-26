@@ -1,6 +1,6 @@
 export default class Button extends Phaser.Button {
   constructor(game, x, y, callback, callbackContext, colorName, label) {
-    super(game, x, y, `components`, callback, callbackContext, `${colorName}-over`, `${colorName}-normal`, `${colorName}-down`);
+    super(game, x, y, `components`, callback, callbackContext);
     this.labelField = new Phaser.Text(game, 0, 0, ``, {
       font: `25px Helvetica`,
       fill: `#000000`
