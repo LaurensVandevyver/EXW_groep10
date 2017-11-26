@@ -6,7 +6,7 @@ import Intro from './states/Intro';
 
 export default class Game extends Phaser.Game {
   constructor() {
-    super(800, 600, Phaser.AUTO);
+    super(`100%`, `100%`, Phaser.AUTO);
     this.state.add(`Boot`, Boot);
     this.state.add(`Preload`, Preload);
     this.state.add(`Start`, Start);
