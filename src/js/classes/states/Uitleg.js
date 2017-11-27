@@ -5,8 +5,9 @@ export default class Menu extends Phaser.State {
     this.createBackground();
     this.createLogo();
     this.createInvite();
-    this.createText();
-    this.createWoman();
+    this.createUitleg();
+    //this.createText();
+    //this.createWoman();
   }
 
   createBackground() {
@@ -19,23 +20,15 @@ export default class Menu extends Phaser.State {
     this.logo = this.add.sprite(10, 10, `smalllogo`);
   }
 
-  createWoman() {
-    this.woman = this.add.sprite(this.game.width - 280, this.game.height - 530, `woman`);
-  }
+  createUitleg() {
+    this.gooi = this.add.sprite((this.game.width / 2) - 429, this.game.height / 2, `gooi`);
+    this.gooi.anchor.setTo(1, 0.5);
 
-  createText() {
-    //const text = `- phaser -\n with a sprinkle of \n pixi dust.`;
-    const ballon = this.add.sprite(this.world.centerX, this.world.centerY, `textballon`);
-    ballon.anchor.setTo(.5, .5);
-    const text =
-      `      Hallo daar!
-      Of zoals wij het zeggen “¡Hola”.
-      Vandaag is het de dag van La Tomatina!
-      Zwaai om mee te doen!`;
-    const style = {font: `20px Helvetica`, fill: `#000000`, align: `left`, borderRadius: `5px`, wordWrapWidth: ballon.width};
+    this.raak = this.add.sprite(this.game.width / 2, (this.game.height / 2) + 30, `raak`);
+    this.raak.anchor.setTo(0.5, 0.5);
 
-    const alltext = this.add.text(this.world.centerX - 80, this.world.centerY, text, style);
-    alltext.anchor.setTo(.5, .5);
+    this.score = this.add.sprite((this.game.width / 2) + 349, (this.game.height / 2) + 30, `score`);
+    this.score.anchor.setTo(0, 0.5);
   }
 
   createInvite() {
@@ -45,7 +38,7 @@ export default class Menu extends Phaser.State {
   }
 
   buttonClicked() {
-    this.state.start(`Uitleg`);
+    this.state.start(`Play`);
   }
 
 }

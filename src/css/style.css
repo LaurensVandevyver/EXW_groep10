@@ -9,3 +9,13 @@ body {
   font-family: Roboto;
   font-size: 1.6rem;
 }
+
+@font-face {
+  font-family: OswaldStencil-Bold;
+
+  src:
+    url(./fonts/Oswald-Stencil.woff) format('woff'),
+    url(./fonts/Oswald-Stencil.woff2) format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
