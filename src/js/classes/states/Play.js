@@ -1,10 +1,17 @@
 import Target from '../objects/Target';
 
 export default class Play extends Phaser.State {
+  init() {
+    this.startTime = this.time.now;
+    console.log(this.startTime);
+  }
   create() {
     this.createBackground();
     this.createLogo();
-    this.startGeneratingTargets();
+    this.createTargets();
+    //this.startGeneratingTargets();
+    this.cursors = this.input.keyboard.createCursorKeys();
+    //this.createTimer();
   }
 
   createBackground() {
@@ -20,24 +27,88 @@ export default class Play extends Phaser.State {
   createTargets() {
     this.targets = this.add.group();
     this.targets.enableBody = true;
-    this.targets.createMultiple (30, `target`);
+    this.targets.createMultiple (50, `target`);
     this.targets.setAll(`body.immovable`, true);
     this.targets.setAll(`checkWorldBounds`, true);
     this.targets.setAll(`outOfBoundsKill`, true);
-    const target = new Target(this.game, this.platforms);
-    target.reset(target.width, this.world.centerY);
+    this.targetTimer = this.time.events.loop(2000, this.createTarget, this);
+    //console.log(this.targets);
   }
 
   createTarget() {
     const target = this.targets.getFirstDead();
-    target.reset(this.game.width, this.game.height - 420 - this.rnd.integerInRange(0, 2) * 70);
-    target.body.velocity.x = - 200;
+    const xPos = Math.floor((Math.random() * this.game.width - 125) + 1);
+    const yPos = Math.floor((Math.random() * this.game.height - 125) + 1);
+    target.reset(xPos, yPos);
+    //this.targetDeleter = this.time.events.loop(Phaser.Timer.SECOND * 2, this.deleteTarget, this);
   }
 
   startGeneratingTargets() {
-    this.targetGenerator = this.time.events.loop(Phaser.Timer.SECOND / 2, this.createTarget, this);
+    this.targetGenerator = this.time.events.loop(Phaser.Timer.SECOND * 2, this.createTarget, this);
     this.targetGenerator.timer.start();
   }
 
+  deleteTarget() {
+    this.targets.kill();
+  }
+
+  endGame() {
+    console.log(`the game has ended`);
+  }
+
+  createTimer() {
+    let seconds = 60;
+    const timeBoard = document.getElementsByClassName(`time`);
+    //console.log(timeBoard);
+    seconds --;
+    //console.log(seconds);
+    timeBoard.innerHtml = seconds;
+  }
+
+  throw() {
+    if (this.input.activePointer.isDown) {
+      if (this.mouseClicked) {
+        this.time.events.add(1500, this.prevent, this);
+      } else {
+        this.createTomato();
+      }
+    }
+  }
+
+  prevent() {
+    console.log(`hoi`);
+  }
+
+  createTomato() {
+    console.log(`tomato created`);
+    this.tomato = this.add.sprite(this.input.activePointer.position.x, this.input.activePointer.position.y, `splash`);
+    this.tomato.enableBody = true;
+    this.tomato.anchor.setTo(0.5, 0.5);
+  }
+
+  update() {
+    // this.createTimer();
+    // const time = Math.round(this.game.time.totalElapsedSeconds());
+    // const maxTime = 60;
+    // const countDown = maxTime - time;
+    // //console.log(countDown);
+    // const alltext = this.add.text(this.world.centerX - 80, this.world.centerY, countDown);
+    // alltext.anchor.setTo(.5, .5);
+    //
+    // if (countDown === 0) {
+    //   this.endGame();
+    // }
+    this.throw();
+    this.checkCollision();
+  }
+
+  checkCollision() {
+    this.physics.arcade.overlap(this.tomato, this.targets, this.hitTarget, null, this);
+  }
+
+  hitTarget() {
+    console.log(`hit`);
+    //this.score++;
+  }
 
 }
