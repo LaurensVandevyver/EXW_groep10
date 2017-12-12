@@ -2,6 +2,7 @@ export default class Play2 extends Phaser.State {
 
   init() {
     this.score = 0;
+    this.timer = 60;
   }
 
   create() {
@@ -24,7 +25,7 @@ export default class Play2 extends Phaser.State {
   }
 
   createScore()  {
-    this.scoreField = this.add.text(10, 170, `Score: 00`, {font: `20px Helvetica`, fill: `#333333`, fontWeight: `bold`});
+    this.scoreField = this.add.text(10, 170, `Score: 0`, {font: `20px Helvetica`, fill: `#333333`, fontWeight: `bold`});
   }
 
   createTomato() {
@@ -60,9 +61,15 @@ export default class Play2 extends Phaser.State {
     }
   }
 
-  targetHit(target, tomato) {
+  deleteTarget(tomato, target) {
     target.kill();
     tomato.kill();
+  }
+
+  targetHit(tomato, target) {
+    this.time.events.add(1000, this.deleteTarget(tomato, target), this);
+    //target.kill();
+    //tomato.kill();
     this.score++;
     this.scoreField.text = `Score: ${this.score}`;
   }
@@ -71,8 +78,21 @@ export default class Play2 extends Phaser.State {
     this.physics.arcade.overlap(this.tomato, this.targets, this.targetHit, null, this);
   }
 
+  checkTime() {
+    if (this.timer === 0) {
+      this.gameOver();
+    }
+  }
+
   update() {
     this.clickHandler();
     this.checkCollision();
+    this.checkTime();
+  }
+
+  gameOver() {
+    this.targetGenerator.timer.stop();
+    this.targets.kill();
+    this.tomato.kill();
   }
 }
