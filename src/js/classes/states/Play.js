@@ -40,16 +40,13 @@ export default class Play extends Phaser.State {
     const xPos = Math.floor((Math.random() * this.game.width - 125) + 1);
     const yPos = Math.floor((Math.random() * this.game.height - 125) + 1);
     target.reset(xPos, yPos);
-    //this.targetDeleter = this.time.events.loop(Phaser.Timer.SECOND * 2, this.deleteTarget, this);
+    console.log(target);
+    this.targetDeleter = this.time.events.loop(Phaser.Timer.SECOND * 2, this.deleteTarget, this);
   }
 
   startGeneratingTargets() {
     this.targetGenerator = this.time.events.loop(Phaser.Timer.SECOND * 2, this.createTarget, this);
     this.targetGenerator.timer.start();
-  }
-
-  deleteTarget() {
-    this.targets.kill();
   }
 
   endGame() {
@@ -84,6 +81,9 @@ export default class Play extends Phaser.State {
     this.tomato = this.add.sprite(this.input.activePointer.position.x, this.input.activePointer.position.y, `splash`);
     this.tomato.enableBody = true;
     this.tomato.anchor.setTo(0.5, 0.5);
+    this.tomato.immovable = true;
+    this.tomato.checkWorldBounds = true;
+    this.tomato.outOfBoundsKill = true;
   }
 
   update() {
@@ -100,6 +100,7 @@ export default class Play extends Phaser.State {
     // }
     this.throw();
     this.checkCollision();
+    //console.log(this.tomato);
   }
 
   checkCollision() {
