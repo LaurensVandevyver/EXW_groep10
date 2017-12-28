@@ -19,7 +19,7 @@ export default class Menu extends Phaser.State {
   }
 
   createInvite() {
-    const playButton = new Button(this.game, this.world.centerX, this.world.height - 100, this.buttonClicked, this, `blue`, `Kom dichter om te starten`);
+    const playButton = new Button(this.game, this.world.centerX, this.world.height - 100, this.buttonClicked, this, `blue`, `Gooi iets om te starten`);
     playButton.anchor.setTo(0.5, 0.5);
     this.add.existing(playButton);
   }

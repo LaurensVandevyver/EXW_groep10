@@ -1,0 +1,10 @@
+/* font converted using font-converter.net. thank you! */
+@font-face {
+  font-family: Oswald;
+
+  src:
+    url(Oswald-Stencil.woff) format('woff'),
+    url(Oswald-Stencil.woff2) format('woff2'); /* Modern Browsers */
+  font-weight: normal;
+  font-style: normal;
+}
